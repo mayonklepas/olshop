@@ -10,13 +10,7 @@ import android.support.v7.widget.RecyclerView;
 
 public abstract class Endlessscrolllinear extends RecyclerView.OnScrollListener{
 
-    /**
-     * The total number of items in the dataset after the last load
-     */
     private int mPreviousTotal = 0;
-    /**
-     * True if we are still waiting for the last set of data to load.
-     */
     private boolean mLoading = true;
 
     @Override
@@ -36,8 +30,6 @@ public abstract class Endlessscrolllinear extends RecyclerView.OnScrollListener{
         int visibleThreshold = 2;
         if (!mLoading && (totalItemCount - visibleItemCount)
                 <= (firstVisibleItem + visibleThreshold)) {
-            // End has been reached
-
             onLoadMore();
 
             mLoading = true;

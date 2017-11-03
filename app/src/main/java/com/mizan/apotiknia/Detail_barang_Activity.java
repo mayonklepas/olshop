@@ -88,7 +88,7 @@ public class Detail_barang_Activity extends AppCompatActivity {
                 load(img_barang).
                 diskCacheStrategy(DiskCacheStrategy.ALL).
                 crossFade().centerCrop().placeholder(R.drawable.placeholder).
-                into(app_bar_image);
+        into(app_bar_image);
         loaddata(id_barang);
         pesan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -229,6 +229,7 @@ public class Detail_barang_Activity extends AppCompatActivity {
                     inres2=result.split("--")[1];
                 }catch (Exception e){
                     //Toast.makeText(Detail_barang_Activity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    inres1=result;
                 }
                 if(inres1.equals("berhasil")){
                     pd.dismiss();
@@ -290,7 +291,7 @@ public class Detail_barang_Activity extends AppCompatActivity {
                     finish();
                 }else{
                     pd.dismiss();
-                    Snackbar.make(findViewById(R.id.detaildatabarang), result ,1000*2).show();
+                    Toast.makeText(Detail_barang_Activity.this,result, Toast.LENGTH_SHORT).show();
                 }
 
             }

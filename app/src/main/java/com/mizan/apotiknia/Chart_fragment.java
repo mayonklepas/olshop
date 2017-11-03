@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -53,10 +54,11 @@ public class Chart_fragment extends Fragment {
     ArrayList<String> img_barang=new ArrayList<>();
     ArrayList<String> keterangan=new ArrayList<>();
     ArrayList<Integer> stock_barang=new ArrayList<>();
+    View v;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View v=inflater.inflate(R.layout.fragment_chart,container,false);
+        v=inflater.inflate(R.layout.fragment_chart,container,false);
         pb=(ProgressBar) v.findViewById(R.id.pb);
         rv=(RecyclerView) v.findViewById(R.id.rv);
         layman=new LinearLayoutManager(getActivity());
@@ -80,6 +82,7 @@ public class Chart_fragment extends Fragment {
                         try {
                             //Toast.makeText(getActivity(), response, Toast.LENGTH_SHORT).show();
                             JSONArray ja=new JSONArray(response);
+                            System.out.println(response);
                             for (int i = 0; i < ja.length() ; i++) {
                                 JSONObject jo=ja.getJSONObject(i);
                                 id_barang.add(jo.getString("IDBARANG"));
@@ -119,6 +122,9 @@ public class Chart_fragment extends Fragment {
             public void onRequestFinished(Request<Object> request) {
                 pb.setVisibility(View.GONE);
                 cadapter.notifyDataSetChanged();
+                if(id_barang.size()==0){
+                    Snackbar.make(v,"Pesanan Kosong",3*1000).show();
+                }
             }
         });
     }

@@ -310,7 +310,13 @@ public class Chart_adapter extends RecyclerView.Adapter<Chart_adapter.Holder>{
         rq.addRequestFinishedListener(new RequestQueue.RequestFinishedListener<Object>() {
             @Override
             public void onRequestFinished(Request<Object> request) {
-                if(result.split("--")[0].equals("berhasil")){
+                String inres="";
+                try {
+                    inres=result.split("--")[0];
+                }catch (Exception e){
+                    inres=result;
+                }
+                if(inres.equals("berhasil")){
                     pd.dismiss();
                     Toast.makeText(ct,  "Barang Berhasil Dihapus", Toast.LENGTH_SHORT).show();
                     nopesanan.remove(holder.getAdapterPosition());
@@ -324,7 +330,7 @@ public class Chart_adapter extends RecyclerView.Adapter<Chart_adapter.Holder>{
                     stock_barang.remove(holder.getAdapterPosition());
                     notifyDataSetChanged();
                 }else{
-                    Toast.makeText(ct,result, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ct,inres, Toast.LENGTH_SHORT).show();
                 }
 
             }

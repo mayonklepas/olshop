@@ -53,11 +53,12 @@ public class Header_history_fragment extends Fragment {
     ArrayList<Double> totalorder=new ArrayList<>();
     int cpage=0;
     String keyword;
+    View v;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View v=inflater.inflate(R.layout.fragment_header_history,container,false);
+        v=inflater.inflate(R.layout.fragment_header_history,container,false);
         pb=(ProgressBar) v.findViewById(R.id.pb);
         rv=(RecyclerView) v.findViewById(R.id.rv);
         layman=new LinearLayoutManager(getActivity());
@@ -138,6 +139,9 @@ public class Header_history_fragment extends Fragment {
                     public void onRequestFinished(Request<Object> request) {
                         pb.setVisibility(View.GONE);
                         hadapter.notifyDataSetChanged();
+                        if(idtransaksi.size()==0){
+                            Snackbar.make(v,"History Kosong",3*1000).show();
+                        }
                     }
                 });
             }

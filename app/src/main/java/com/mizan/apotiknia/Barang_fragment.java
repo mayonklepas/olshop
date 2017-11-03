@@ -57,22 +57,24 @@ public class Barang_fragment extends Fragment {
     ArrayList<String> satuan=new ArrayList<>();
     int cpage=0;
     String keyword;
+    View v;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View v=inflater.inflate(R.layout.fragment_barang,container,false);
+        v=inflater.inflate(R.layout.fragment_barang,container,false);
         sv=(SearchView) v.findViewById(R.id.sv);
         pb=(ProgressBar) v.findViewById(R.id.pb);
         rv=(RecyclerView) v.findViewById(R.id.rv);
-        layman=new GridLayoutManager(getActivity(),2);
+        //layman=new GridLayoutManager(getActivity(),2);
+        layman=new LinearLayoutManager(getActivity());
         rv.setLayoutManager(layman);
         rv.setHasFixedSize(true);
         rv.setItemAnimator(new DefaultItemAnimator());
         badapter=new Barang_adapter(id_barang,nama_barang,harga_barang,stock_barang,img_barang,satuan,getActivity());
         rv.setAdapter(badapter);
         loaddata();
-        rv.addOnScrollListener(new Endlessscroll() {
+        rv.addOnScrollListener(new Endlessscrolllinear() {
             @Override
             public void onLoadMore() {
                 if (keyword==null || keyword.isEmpty()){
@@ -102,7 +104,7 @@ public class Barang_fragment extends Fragment {
                 cleardata();
                 rv.setAdapter(badapter);
                 caridata(keyword);
-                rv.addOnScrollListener(new Endlessscroll() {
+                rv.addOnScrollListener(new Endlessscrolllinear() {
                     @Override
                     public void onLoadMore() {
                         if (keyword==null || keyword.isEmpty()){
@@ -193,6 +195,9 @@ public class Barang_fragment extends Fragment {
                     public void onRequestFinished(Request<Object> request) {
                         pb.setVisibility(View.GONE);
                         badapter.notifyDataSetChanged();
+                        if(id_barang.size()==0){
+                            Snackbar.make(v,"Barang Tidak Ditemukan",3*1000).show();
+                        }
                     }
                 });
             }
@@ -252,6 +257,9 @@ public class Barang_fragment extends Fragment {
                     public void onRequestFinished(Request<Object> request) {
                         pb.setVisibility(View.GONE);
                         badapter.notifyDataSetChanged();
+                        if(id_barang.size()==0){
+                            Snackbar.make(v,"Barang Tidak Ditemukan",3*1000).show();
+                        }
                     }
                 });
             }

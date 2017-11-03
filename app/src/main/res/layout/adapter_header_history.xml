@@ -57,7 +57,8 @@
                     android:layout_gravity="left"
                     android:text="status"
                     android:textColor="#70dd27"
-                    android:textSize="15sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/totalorder"

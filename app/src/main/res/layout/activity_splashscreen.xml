@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/bgsplash"
     android:orientation="vertical"
-    tools:context="com.mizan.apotiknia.Splashscreen"
     android:id="@+id/splashscreen">
 
     <de.hdodenhof.circleimageview.CircleImageView

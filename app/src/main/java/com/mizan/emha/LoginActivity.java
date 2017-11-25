@@ -1,4 +1,4 @@
-package com.mizan.apotiknia;
+package com.mizan.emha;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                                             JSONObject jo=ja.getJSONObject(i);
                                             Config.idcard=jo.getString("IDCARDS");
                                             Config.totalpage=jo.getInt("PAGEINV");
-                                            Config.namatoko=jo.getString("NAMAPELANGGAN");
+                                            Config.namatoko=jo.getString("NAMA");
                                         }
                                         status=true;
                                     }

@@ -1,4 +1,4 @@
-package com.mizan.apotiknia;
+package com.mizan.emha;
 
 import android.app.Fragment;
 import android.graphics.Typeface;
@@ -108,7 +108,7 @@ public class Home_fragment extends Fragment {
                             public void onResponse(String response) {
                                 try {
                                     JSONArray ja=new JSONArray(response);
-
+                                    System.out.println("Best Seller :"+response);
                                     for (int i = 0; i < ja.length() ; i++) {
                                         JSONObject jo=ja.getJSONObject(i);
                                         id_barang.add(jo.getString("NOINDEX"));
@@ -116,7 +116,7 @@ public class Home_fragment extends Fragment {
                                         satuan.add(jo.getString("SATUAN"));
                                         stock_barang.add(jo.getInt("STOK"));
                                         harga_barang.add(jo.getDouble("HARGAJUAL"));
-                                        img_barang.add(Config.url+"/barang/"+jo.getString("NOINDEX")+".jpg");
+                                        img_barang.add(Config.url+"/barang/"+jo.getString("ID_IMAGE")+".jpg");
 
                                     }
                                 } catch (JSONException e) {

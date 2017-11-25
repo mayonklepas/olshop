@@ -49,7 +49,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="10dp"
-            tools:context="com.mizan.apotiknia.Detail_barang_Activity">
+            tools:context="com.mizan.emha.Detail_barang_Activity">
 
             <TextView
                 android:id="@+id/nama_barang"

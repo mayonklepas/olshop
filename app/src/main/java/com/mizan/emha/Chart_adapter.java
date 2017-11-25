@@ -1,14 +1,9 @@
-package com.mizan.apotiknia;
+package com.mizan.emha;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.TimedMetaData;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,12 +28,6 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.mizan.apotiknia.R.id.alertTitle;
-import static com.mizan.apotiknia.R.id.jumlah_barang;
-import static com.mizan.apotiknia.R.id.orderpesanan;
-import static com.mizan.apotiknia.R.id.stock_barang;
-import static com.mizan.apotiknia.R.id.totalbayar;
 
 /**
  * Created by Minami on 08/09/2017.

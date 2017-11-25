@@ -1,4 +1,4 @@
-package com.mizan.apotiknia;
+package com.mizan.emha;
 
 import android.app.Fragment;
 import android.graphics.Typeface;

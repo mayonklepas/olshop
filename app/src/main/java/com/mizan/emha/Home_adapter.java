@@ -1,4 +1,4 @@
-package com.mizan.apotiknia;
+package com.mizan.emha;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
  * Created by Minami on 08/09/2017.
  */
 
-public class Barang_adapter extends RecyclerView.Adapter<Barang_adapter.Holder>{
+public class Home_adapter extends RecyclerView.Adapter<Home_adapter.Holder>{
     ArrayList<String> id_barang=new ArrayList<>();
     ArrayList<String> nama_barang=new ArrayList<>();
     ArrayList<Double> harga_barang=new ArrayList<>();
@@ -31,8 +32,8 @@ public class Barang_adapter extends RecyclerView.Adapter<Barang_adapter.Holder>{
     Context ct;
     NumberFormat nf=NumberFormat.getInstance();
 
-    public Barang_adapter(ArrayList<String> id_barang, ArrayList<String> nama_barang, ArrayList<Double> harga_barang,
-                          ArrayList<Integer> stock_barang, ArrayList<String> img_barang,ArrayList<String> satuan, Context ct) {
+    public Home_adapter(ArrayList<String> id_barang, ArrayList<String> nama_barang, ArrayList<Double> harga_barang,
+                        ArrayList<Integer> stock_barang, ArrayList<String> img_barang, ArrayList<String> satuan, Context ct) {
         this.id_barang = id_barang;
         this.nama_barang = nama_barang;
         this.harga_barang = harga_barang;
@@ -49,19 +50,21 @@ public class Barang_adapter extends RecyclerView.Adapter<Barang_adapter.Holder>{
         public TextView harga_barang;
         public TextView stock_barang;
         public Button detail;
+        LinearLayout ll;
         public Holder(View itemView) {
             super(itemView);
             img_barang=(ImageView) itemView.findViewById(R.id.img_barang);
             nama_barang=(TextView) itemView.findViewById(R.id.nama_barang);
             harga_barang=(TextView) itemView.findViewById(R.id.harga_barang);
             stock_barang=(TextView) itemView.findViewById(R.id.stock_barang);
-            detail=(Button) itemView.findViewById(R.id.detail);
+            //detail=(Button) itemView.findViewById(R.id.detail);
+            ll=(LinearLayout) itemView.findViewById(R.id.ll);
         }
     }
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_barang,parent,false);
+        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_home,parent,false);
         return new Holder(v);
     }
 
@@ -81,7 +84,7 @@ public class Barang_adapter extends RecyclerView.Adapter<Barang_adapter.Holder>{
 
             }
         });
-        holder.detail.setOnClickListener(new View.OnClickListener() {
+        holder.ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i=new Intent(ct,Detail_barang_Activity.class);

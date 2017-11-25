@@ -1,4 +1,4 @@
-package com.mizan.apotiknia;
+package com.mizan.emha;
 
 import android.content.DialogInterface;
 import android.os.Bundle;

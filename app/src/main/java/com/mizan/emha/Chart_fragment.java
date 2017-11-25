@@ -1,11 +1,13 @@
-package com.mizan.apotiknia;
+package com.mizan.emha;
 
-import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -36,76 +38,78 @@ import java.util.Map;
  * Created by Minami on 08/09/2017.
  */
 
-public class History_activity extends AppCompatActivity {
+public class Chart_fragment extends Fragment {
 
-    SearchView sv;
     RecyclerView rv;
-    History_adapter adapter;
+    Chart_adapter cadapter;
     RecyclerView.LayoutManager layman;
     ProgressBar pb;
 
-    ArrayList<String> noindex=new ArrayList<>();
-    ArrayList<String> kode=new ArrayList<>();
-    ArrayList<String> nama=new ArrayList<>();
-    ArrayList<Integer> qty=new ArrayList<>();
-    ArrayList<String> satuan=new ArrayList<>();
+    ArrayList<Integer> nopesanan=new ArrayList<>();
+    ArrayList<String> id_barang=new ArrayList<>();
+    ArrayList<String> nama_barang=new ArrayList<>();
+    ArrayList<String> nama_satuan=new ArrayList<>();
+    ArrayList<Integer> jumlah_barang=new ArrayList<>();
+    ArrayList<Double> harga_barang=new ArrayList<>();
     ArrayList<String> img_barang=new ArrayList<>();
-    ArrayList<Double> harga=new ArrayList<>();
-
+    ArrayList<String> keterangan=new ArrayList<>();
+    ArrayList<Integer> stock_barang=new ArrayList<>();
+    View v;
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history);
-        sv=(SearchView) findViewById(R.id.sv);
-        pb=(ProgressBar) findViewById(R.id.pb);
-        rv=(RecyclerView) findViewById(R.id.rv);
-        layman=new LinearLayoutManager(this);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        v=inflater.inflate(R.layout.fragment_chart,container,false);
+        pb=(ProgressBar) v.findViewById(R.id.pb);
+        rv=(RecyclerView) v.findViewById(R.id.rv);
+        layman=new LinearLayoutManager(getActivity());
         rv.setLayoutManager(layman);
         rv.setHasFixedSize(true);
         rv.setItemAnimator(new DefaultItemAnimator());
-        adapter=new History_adapter(noindex,kode,nama,qty,satuan,harga,img_barang,this);
-        rv.setAdapter(adapter);
-        Bundle ex=getIntent().getExtras();
-        loaddata(ex.getString("id_transaksi"));
-
+        cadapter=new Chart_adapter(nopesanan,id_barang,nama_barang,nama_satuan,jumlah_barang,harga_barang,img_barang,
+                keterangan,stock_barang,getActivity());
+        rv.setAdapter(cadapter);
+        loaddata();
+        return v;
     }
 
-
-    private void loaddata(final String id_transaksi){
+    private void loaddata(){
         pb.setVisibility(View.VISIBLE);
-        RequestQueue rq= Volley.newRequestQueue(this);
-        StringRequest sr=new StringRequest(Request.Method.POST, Config.url+"/historyorderdetail",
+        RequestQueue rq= Volley.newRequestQueue(getActivity());
+        StringRequest sr=new StringRequest(Request.Method.POST, Config.url+"/daftarcart",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            //Toast.makeText(getActivity(), response, Toast.LENGTH_SHORT).show();
                             JSONArray ja=new JSONArray(response);
+                            System.out.println(response);
                             for (int i = 0; i < ja.length() ; i++) {
                                 JSONObject jo=ja.getJSONObject(i);
-                                noindex.add(jo.getString("NOINDEX"));
-                                kode.add(jo.getString("KODE"));
-                                nama.add(jo.getString("NAMA"));
-                                qty.add(jo.getInt("QTY"));
-                                satuan.add(jo.getString("SATUAN"));
-                                harga.add(jo.getDouble("HARGA"));
-                                img_barang.add(Config.url+"/barang/"+jo.getString("NOINDEX")+".jpg");
+                                id_barang.add(jo.getString("IDBARANG"));
+                                nama_barang.add(jo.getString("NAMA"));
+                                jumlah_barang.add(jo.getInt("JUMLAH"));
+                                stock_barang.add(jo.getInt("STOK"));
+                                harga_barang.add(jo.getDouble("HARGAJUAL"));
+                                nama_satuan.add(jo.getString("SATUAN"));
+                                keterangan.add(jo.getString("KETERANGAN"));
+                                nopesanan.add(jo.getInt("NOINDEX"));
+                                img_barang.add(Config.url+"/barang/"+jo.getString("ID_IMAGE")+".jpg");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(History_activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params=new HashMap<>();
-                params.put("idtransaksi",id_transaksi);
+                params.put("idcards",Config.idcard);
                 return params;
             }
         };
@@ -117,7 +121,10 @@ public class History_activity extends AppCompatActivity {
             @Override
             public void onRequestFinished(Request<Object> request) {
                 pb.setVisibility(View.GONE);
-                adapter.notifyDataSetChanged();
+                cadapter.notifyDataSetChanged();
+                if(id_barang.size()==0){
+                    Snackbar.make(v,"Pesanan Kosong",3*1000).show();
+                }
             }
         });
     }

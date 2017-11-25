@@ -1,14 +1,14 @@
-package com.mizan.apotiknia;
+package com.mizan.emha;
 
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 /**
- * Created by Minami on 10/09/2017.
+ * Created by Minami on 12/09/2017.
  */
 
-public abstract class Endlessscroll extends RecyclerView.OnScrollListener {
-
+public abstract class Endlessscrolllinear extends RecyclerView.OnScrollListener{
 
     private int mPreviousTotal = 0;
     private boolean mLoading = true;
@@ -19,7 +19,7 @@ public abstract class Endlessscroll extends RecyclerView.OnScrollListener {
 
         int visibleItemCount = recyclerView.getChildCount();
         int totalItemCount = recyclerView.getLayoutManager().getItemCount();
-        int firstVisibleItem = ((GridLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+        int firstVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
 
         if (mLoading) {
             if (totalItemCount > mPreviousTotal) {
@@ -30,7 +30,6 @@ public abstract class Endlessscroll extends RecyclerView.OnScrollListener {
         int visibleThreshold = 2;
         if (!mLoading && (totalItemCount - visibleItemCount)
                 <= (firstVisibleItem + visibleThreshold)) {
-
             onLoadMore();
 
             mLoading = true;
@@ -38,5 +37,4 @@ public abstract class Endlessscroll extends RecyclerView.OnScrollListener {
     }
 
     public abstract void onLoadMore();
-
 }
